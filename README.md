@@ -133,4 +133,4 @@ ldap_service> sbt test
 [success] Total time: 13 s, completed 13.12.2020, 17:06:24
 ```
 ## Contact
-[Me at LinkedIn](https://www.linkedin.com/in/dawid-l-8115141a2)# ldap-authentication-service
+[Me at LinkedIn](https://www.linkedin.com/in/dawid-l-8115141a2)
