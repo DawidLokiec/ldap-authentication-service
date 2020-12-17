@@ -123,7 +123,7 @@ In order to run the unit tests use the following command in the project's root d
 sbt test
 ```
 
-**example call**
+**Example call**
 
 ```powershell
 ldap_service> sbt test
