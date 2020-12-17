@@ -1,0 +1,19 @@
+# sbt
+target/
+.bsp/
+
+# scala
+*.class
+*.log
+
+# intellij idea
+*.iml
+*.ipr
+*.iws
+.idea
+
+# secrets
+*.key
+*.cert
+*.p12
+*.jks
