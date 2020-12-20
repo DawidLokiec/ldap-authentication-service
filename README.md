@@ -121,7 +121,7 @@ In order to run the unit tests use the following command in the project's root d
 sbt test
 ```
 
-**example call**
+**Example call**
 
 ```powershell
 ldap-authentication-service> sbt test
@@ -130,5 +130,6 @@ ldap-authentication-service> sbt test
 [info] All tests passed.
 [success] Total time: 13 s, completed 13.12.2020, 17:06:24
 ```
-## Contact
-[Me at LinkedIn](https://www.linkedin.com/in/dawid-l-8115141a2)
+## Links
+- [Ready to run docker container](https://hub.docker.com/repository/docker/dawidwalczak/ldap-authentication-service)
+- [Me at LinkedIn](https://www.linkedin.com/in/dawid-l-8115141a2)
