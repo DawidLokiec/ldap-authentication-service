@@ -14,7 +14,8 @@ In order to perform an authentication use the following HTTP**S** GET request:
 GET https://localhost/?username=<username>&password=<password>
 ```
 
-- Note that this service enforces (works only with) HTTP**S**.
+> **Note** that this service enforces (works only with) HTTP**S**.
+> The default CORS policy allows **only GET** and **OPTIONS** requests, but can be overridden in the project's application.conf.
 
 #### Response
 

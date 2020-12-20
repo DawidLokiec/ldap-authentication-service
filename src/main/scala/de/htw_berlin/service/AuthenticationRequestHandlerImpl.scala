@@ -1,5 +1,6 @@
 package de.htw_berlin.service
 
+import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
 import de.htw_berlin.http.dip.RequestHandler
 
 /**
@@ -19,16 +20,17 @@ class AuthenticationRequestHandlerImpl(val ldapAuthenticationService: LdapAuthen
    *
    * @return an instance of Route representing GET /?username=<username>&password=<password>.
    */
-  override def getRoute: akka.http.scaladsl.server.Route = get {
-    parameters(Constants.UrlParameterNameUsername, Constants.UrlParameterNamePassword) { (username, password) =>
-      import akka.http.scaladsl.model.StatusCodes
-      complete(
-        if (ldapAuthenticationService.authenticate(username, password))
-          StatusCodes.OK
-        else
-          StatusCodes.Unauthorized
-      )
+  override def getRoute: akka.http.scaladsl.server.Route = cors() {
+    get {
+      parameters(Constants.UrlParameterNameUsername, Constants.UrlParameterNamePassword) { (username, password) =>
+        import akka.http.scaladsl.model.StatusCodes
+        complete(
+          if (ldapAuthenticationService.authenticate(username, password))
+            StatusCodes.OK
+          else
+            StatusCodes.Unauthorized
+        )
+      }
     }
   }
-
 }
