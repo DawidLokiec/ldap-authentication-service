@@ -4,16 +4,6 @@ This repository contains the implementation of a microservice which offers a RES
 
 ## API
 
-### Endpoint
-
-#### Local environment
-
-At the local machine the API's endpoint is `https://0.0.0.0:443/`. Therefore, requests can be made to `https://localhost`.
-
-#### Production environment
-
-In the production the API's endpoint is the domain name / IP address of server where you deploy this microservice. You might specify a different port while running the application inside a docker container.
-
 ### Authentication
 
 #### Example request
@@ -94,12 +84,12 @@ ldap-authentication-service   0.1.0-SNAPSHOT   616bcbf3aa63   About a minute ago
 Firstly the environment variables needs to be set properly. After that the docker container can be run for instance as follows:
 
 ```powershell
-ldap_service>docker run -it -p 443:443 --env LDAP_SERVER_URL --env LDAP_SEARCH_BASE --env KEYSTORE_FULL_NAME --env KEYSTORE_PASSWORD -v "/c/keystore":"/root/cert" 616
+ldap-authentication-service>docker run -it -p 443:443 --env LDAP_SERVER_URL --env LDAP_SEARCH_BASE --env KEYSTORE_FULL_NAME --env KEYSTORE_PASSWORD -v "/c/keystore":"/root/cert" 616
 ```
 
 **Remarks**
 
-- While running the service within a docker container, the key store location on the host system need to be mounted  to the container.
+- While running the service within a docker container, the key store location on the host system needs to be mounted  to the container.
   - In the case of a Window host system the path need to be formed into a Unix path.
 - In this example the key store is mounted to `/root/cert` but it could also be any other location.
 - The 616 is the image ID. It will **differ** on your machine after running `sbt docker:publishLocal`. Make sure you use the appropriate one.
@@ -115,7 +105,7 @@ Server online at https://0.0.0.0:443/
 
 #### Running the tests
 
-In order to run the unit tests use the following command in the project's root directory **ldap_service**:
+In order to run the unit tests use the following command in the project's root directory **ldap-authentication-service/**:
 
 ```
 sbt test
