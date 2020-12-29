@@ -1,10 +1,10 @@
 # LDAP Authentication Service
-## Description
-This repository contains the implementation of a microservice which offers a REST API for LDAP authentication.
+## Repository Description
+This repository contains the implementation of a microservice which offers a **REST API for LDAP authentication**.
 
-## API
+## API Documentation
 
-### Authentication
+### How to perform authentication?
 
 #### Example request
 
@@ -15,13 +15,13 @@ GET https://localhost/?username=<username>&password=<password>
 ```
 
 > **Note** that this service enforces (works only with) HTTP**S**.
-> The default CORS policy allows **only GET** and **OPTIONS** requests, but can be overridden in the project's application.conf.
+> The default CORS policy allows **only GET** and **OPTIONS** requests, but can be overridden in the project's `application.conf` file.
 
 #### Response
 
 ##### Response Code
 
-The response status code is 200 (OK) if the authentication succeed, otherwise 401 (Unauthorized).
+The response status code is `200 (OK)` if the authentication succeed, otherwise `401 (Unauthorized)`.
 
 ##### Response Body
 
