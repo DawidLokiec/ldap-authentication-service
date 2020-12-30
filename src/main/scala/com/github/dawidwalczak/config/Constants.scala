@@ -1,6 +1,8 @@
 package com.github.dawidwalczak.config
 
-/** This object contains constants related with the current module config. */
+/**
+ * This object contains constants related with the current module config.
+ */
 object Constants {
 
   // LDAP related environment variables

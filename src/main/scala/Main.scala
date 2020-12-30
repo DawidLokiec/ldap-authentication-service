@@ -5,7 +5,6 @@ import com.github.dawidwalczak.http.{HttpsConnectionContextFactory, Server}
 import com.github.dawidwalczak.service.{AuthenticationRequestHandlerImpl, DistinguishedNameResolverImpl, LdapAuthenticationService, LdapAuthenticationServiceImpl}
 
 import scala.concurrent.{Await, ExecutionContextExecutor}
-import scala.util.{Failure, Success}
 
 /**
  * Represents the main object with the main method of the LDAP authentication microservice.
@@ -17,20 +16,13 @@ import scala.util.{Failure, Success}
  * - KEYSTORE_FULL_NAME
  * - KEYSTORE_PASSWORD
  *
- * @see de.htw_berlin.config.Constants#EnvVarNameLdapServerUrl
- * @see de.htw_berlin.config.Constants#EnvVarNameLdapSearchBase
- * @see de.htw_berlin.config.Constants#EnvVarNameKeystoreFullName
- * @see de.htw_berlin.config.Constants#EnvVarNameKeystorePassword
+ * @note Read the project's README for more details how to properly setup this service.
  */
 object Main {
 
   /** Starts the LDAP authentication microservice.
    *
-   * @param args command line arguments are ignored. Instead the following environment variables needs to be set:
-   *             - LDAP_SERVER_URL
-   *             - LDAP_SEARCH_BASE
-   *             - KEYSTORE_FULL_NAME
-   *             - KEYSTORE_PASSWORD
+   * @param args command line arguments are ignored. Instead the above mentioned environment variables need to be set.
    */
   def main(args: Array[String]): Unit = {
     implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, Constants.ActorSystemName)
@@ -50,6 +42,7 @@ object Main {
     val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandlerImpl(service))
     val serverEndpoint = s"https://${httpsServer.host}:${httpsServer.port}/"
 
+    import scala.util.{Failure, Success}
     bindingFuture.onComplete {
       case Success(_) =>
         println(s"Server online at $serverEndpoint")
