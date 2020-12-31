@@ -1,11 +1,12 @@
 package com.github.dawidwalczak.http
 
-import akka.actor.typed.ActorSystem
-import akka.actor.typed.scaladsl.Behaviors
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AsyncFlatSpec
 
 class ServerSpec extends AsyncFlatSpec with BeforeAndAfterAll {
+
+  import akka.actor.typed.ActorSystem
+  import akka.actor.typed.scaladsl.Behaviors
 
   private implicit val system: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, "test-actor-system")
   private val server = new Server(httpsContext = null)
@@ -14,12 +15,12 @@ class ServerSpec extends AsyncFlatSpec with BeforeAndAfterAll {
     system.terminate()
   }
 
-  "the default hostname" should s"be ${Constants.DefaultServerIpv4Address}" in {
-    assert(Constants.DefaultServerIpv4Address == server.host)
+  "the default server's host" should "be 0.0.0.0" in {
+    assert("0.0.0.0" == server.host)
   }
 
-  "the default port" should s"be ${Constants.DefaultHttpsPort}" in {
-    assert(Constants.DefaultHttpsPort == server.port)
+  "the default server's port" should "be 443" in {
+    assert(443 == server.port)
   }
 
 }
