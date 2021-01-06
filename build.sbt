@@ -30,4 +30,4 @@ dockerBaseImage := "openjdk:15.0.1"
 //noinspection SpellCheckingInspection
 dockerRepository := Some("dawidlokiec")
 packageName in Docker := "ldap-authentication-service"
-version in Docker := "0.4.0"
+version in Docker := "latest"
