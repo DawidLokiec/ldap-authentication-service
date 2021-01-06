@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.service
+package com.github.dawidlokiec.service
 
 /**
  * This object contains constants related with the current module service.

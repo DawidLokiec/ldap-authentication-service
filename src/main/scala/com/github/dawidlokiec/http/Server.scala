@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.http
+package com.github.dawidlokiec.http
 
 import akka.actor.typed.ActorSystem
 import akka.http.scaladsl.{Http, HttpsConnectionContext}
@@ -13,13 +13,13 @@ import akka.http.scaladsl.{Http, HttpsConnectionContext}
  * @param port         the optional port of the server. The default value is 443.
  * @param httpsContext the https connection context for the https connection.
  * @param actorSystem  an implicit actor system.
- * @see com.github.dawidwalczak.http.dip.RequestHandler
+ * @see com.github.dawidlokiec.http.dip.RequestHandler
  */
 class Server(val host: String = "0.0.0.0",
              val port: Int = 443,
              val httpsContext: HttpsConnectionContext)(implicit val actorSystem: ActorSystem[Nothing]) {
 
-  import com.github.dawidwalczak.http.dip.RequestHandler
+  import com.github.dawidlokiec.http.dip.RequestHandler
   import scala.concurrent.Future
   import akka.http.scaladsl.Http.ServerBinding
 

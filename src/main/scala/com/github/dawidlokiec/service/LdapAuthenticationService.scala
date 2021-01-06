@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.service
+package com.github.dawidlokiec.service
 
 /**
  * This trait defines the functionalities of a LDAP authentication service.

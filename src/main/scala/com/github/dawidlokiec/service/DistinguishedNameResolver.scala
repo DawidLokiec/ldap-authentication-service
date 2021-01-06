@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.service
+package com.github.dawidlokiec.service
 
 /**
  * This trait defines a method to resolve the distinguished name (DN) of an user from its username.

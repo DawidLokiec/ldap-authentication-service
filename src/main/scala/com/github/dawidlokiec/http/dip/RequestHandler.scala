@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.http.dip
+package com.github.dawidlokiec.http.dip
 
 /**
  * This trait defines the methods of a HTTP request handler.

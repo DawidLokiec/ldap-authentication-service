@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.security
+package com.github.dawidlokiec.security
 
 /**
  * This object contains a factory method to create a java.security.KeyStore in PKCS12 format.

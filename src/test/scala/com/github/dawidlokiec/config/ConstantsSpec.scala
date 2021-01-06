@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.config
+package com.github.dawidlokiec.config
 
 import Constants.{ActorSystemName, EnvVarNameKeystoreFullName, EnvVarNameKeystorePassword, EnvVarNameLdapSearchBase, EnvVarNameLdapServerUrl}
 import org.scalatest.flatspec.AnyFlatSpec

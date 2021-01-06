@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.config
+package com.github.dawidlokiec.config
 
 /**
  * This object contains constants related with the current module config.

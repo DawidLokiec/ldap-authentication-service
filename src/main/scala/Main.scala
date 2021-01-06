@@ -1,8 +1,8 @@
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import com.github.dawidwalczak.config.Constants
-import com.github.dawidwalczak.http.{HttpsConnectionContextFactory, Server}
-import com.github.dawidwalczak.service.{AuthenticationRequestHandlerImpl, DistinguishedNameResolverImpl, LdapAuthenticationService, LdapAuthenticationServiceImpl}
+import com.github.dawidlokiec.config.Constants
+import com.github.dawidlokiec.http.{HttpsConnectionContextFactory, Server}
+import com.github.dawidlokiec.service.{AuthenticationRequestHandlerImpl, DistinguishedNameResolverImpl, LdapAuthenticationService, LdapAuthenticationServiceImpl}
 
 import scala.concurrent.{Await, ExecutionContextExecutor}
 

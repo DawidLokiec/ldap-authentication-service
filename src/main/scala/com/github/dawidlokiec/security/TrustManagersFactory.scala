@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.security
+package com.github.dawidlokiec.security
 
 /**
  * This object contains a factory method to create trust managers for a given key store.

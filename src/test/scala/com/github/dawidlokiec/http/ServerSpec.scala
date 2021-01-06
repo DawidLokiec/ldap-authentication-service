@@ -1,4 +1,4 @@
-package com.github.dawidwalczak.http
+package com.github.dawidlokiec.http
 
 import org.scalatest.BeforeAndAfterAll
 import org.scalatest.flatspec.AsyncFlatSpec

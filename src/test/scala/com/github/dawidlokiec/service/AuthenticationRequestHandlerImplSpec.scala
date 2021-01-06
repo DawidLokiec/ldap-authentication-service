@@ -1,8 +1,8 @@
-package com.github.dawidwalczak.service
+package com.github.dawidlokiec.service
 
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
-import com.github.dawidwalczak.http.dip.RequestHandler
+import com.github.dawidlokiec.http.dip.RequestHandler
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
