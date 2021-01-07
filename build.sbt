@@ -28,6 +28,6 @@ libraryDependencies ++= Seq(
 // Docker
 dockerBaseImage := "openjdk:15.0.1"
 //noinspection SpellCheckingInspection
-dockerRepository := Some("dawidwalczak")
+dockerRepository := Some("dawidlokiec")
 packageName in Docker := "ldap-authentication-service"
 version in Docker := "latest"
