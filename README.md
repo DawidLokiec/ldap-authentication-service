@@ -6,12 +6,14 @@ This repository contains the implementation of a microservice which offers a **R
 
 ### How to perform authentication?
 
-#### Example request
-
 In order to perform an authentication use the following HTTP**S** GET request:
 
 ```http
-GET https://localhost/?username=<username>&password=<password>
+GET https://<host>[:port]/?username=<username>&password=<password>
+```
+#### Example request
+```http
+GET https://localhost/?username=johndoe&password=secret!
 ```
 
 > **Note** that this service enforces (works only with) HTTP**S**.
