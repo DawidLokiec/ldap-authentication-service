@@ -24,7 +24,7 @@ class AuthenticationRequestHandlerImpl(private val ldapAuthenticationService: Ld
    */
   override def getRoute: Route = cors() {
     get {
-      parameters(Constants.UrlParameterNameUsername, Constants.UrlParameterNamePassword) { (username, password) =>
+      parameters("username", "password") { (username, password) =>
         import akka.http.scaladsl.model.StatusCodes
         complete(
           if (ldapAuthenticationService.authenticate(username, password))
