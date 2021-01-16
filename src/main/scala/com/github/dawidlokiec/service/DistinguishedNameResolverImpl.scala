@@ -5,7 +5,7 @@ package com.github.dawidlokiec.service
  *
  * @param searchBase the search base.
  */
-class DistinguishedNameResolverImpl(val searchBase: String) extends DistinguishedNameResolver {
+class DistinguishedNameResolverImpl(private val searchBase: String) extends DistinguishedNameResolver {
 
   /**
    * Returns the distinguished name (DN) of an user.

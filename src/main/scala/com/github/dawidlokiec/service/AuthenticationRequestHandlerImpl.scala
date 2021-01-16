@@ -10,7 +10,8 @@ import com.github.dawidlokiec.server.dip.RequestHandler
  *
  * @param ldapAuthenticationService the authentication service to perform authentication.
  */
-class AuthenticationRequestHandlerImpl(val ldapAuthenticationService: LdapAuthenticationService) extends RequestHandler {
+class AuthenticationRequestHandlerImpl(private val ldapAuthenticationService: LdapAuthenticationService) extends
+  RequestHandler {
 
   import akka.http.scaladsl.server.Directives.{complete, get, parameters}
 

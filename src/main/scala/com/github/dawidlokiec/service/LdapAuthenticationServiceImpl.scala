@@ -1,17 +1,17 @@
 package com.github.dawidlokiec.service
 
-import java.util.Properties
-import javax.naming.{AuthenticationException, Context}
-import javax.naming.directory.InitialDirContext
-
 /** This class provides functionalities to perform an authentication against a LDAP directory.
  *
  * @param ldapServerUrl             the URL of the LDAP server.
  * @param distinguishedNameResolver the DN resolver.
  */
-class LdapAuthenticationServiceImpl(val ldapServerUrl: String,
-                                    val distinguishedNameResolver: DistinguishedNameResolver
+class LdapAuthenticationServiceImpl(private val ldapServerUrl: String,
+                                    private val distinguishedNameResolver: DistinguishedNameResolver
                                    ) extends LdapAuthenticationService {
+
+  import java.util.Properties
+  import javax.naming.{AuthenticationException, Context}
+
   /** The the environment for the LDAP connection. */
   private val ldapEnvironmentProperties = new Properties()
   ldapEnvironmentProperties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory")
@@ -33,6 +33,7 @@ class LdapAuthenticationServiceImpl(val ldapServerUrl: String,
       ldapEnvironmentProperties.put(Context.SECURITY_PRINCIPAL, distinguishedNameResolver.resolve(username))
       ldapEnvironmentProperties.put(Context.SECURITY_CREDENTIALS, password)
       try {
+        import javax.naming.directory.InitialDirContext
         val connectionWithLdapServer = new InitialDirContext(ldapEnvironmentProperties)
         connectionWithLdapServer.close()
         true
