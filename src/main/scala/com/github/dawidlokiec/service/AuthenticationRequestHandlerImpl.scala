@@ -1,7 +1,7 @@
 package com.github.dawidlokiec.service
 
 import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
-import com.github.dawidlokiec.http.dip.RequestHandler
+import com.github.dawidlokiec.server.dip.RequestHandler
 
 /**
  * This class is responsible for handling incoming authentication requests.
