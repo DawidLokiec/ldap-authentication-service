@@ -1,6 +1,5 @@
 package com.github.dawidlokiec.service
 
-import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
 import com.github.dawidlokiec.server.dip.RequestHandler
 
 /**
@@ -13,7 +12,9 @@ import com.github.dawidlokiec.server.dip.RequestHandler
 class AuthenticationRequestHandlerImpl(private val ldapAuthenticationService: LdapAuthenticationService) extends
   RequestHandler {
 
+  import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
   import akka.http.scaladsl.server.Directives.{complete, get, parameters}
+  import akka.http.scaladsl.server.Route
 
   /**
    * Returns an instance of Route representing the following route:
@@ -21,7 +22,7 @@ class AuthenticationRequestHandlerImpl(private val ldapAuthenticationService: Ld
    *
    * @return an instance of Route representing GET /?username=<username>&password=<password>.
    */
-  override def getRoute: akka.http.scaladsl.server.Route = cors() {
+  override def getRoute: Route = cors() {
     get {
       parameters(Constants.UrlParameterNameUsername, Constants.UrlParameterNamePassword) { (username, password) =>
         import akka.http.scaladsl.model.StatusCodes
