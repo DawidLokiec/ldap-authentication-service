@@ -15,5 +15,4 @@ trait DistinguishedNameResolver {
    * @return the distinguished name.
    */
   def resolve(username: String): String
-
 }

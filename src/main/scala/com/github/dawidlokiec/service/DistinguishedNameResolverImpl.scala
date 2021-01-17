@@ -15,7 +15,5 @@ class DistinguishedNameResolverImpl(private val searchBase: String) extends Dist
    * @param username the user's name.
    * @return the distinguished name.
    */
-  override def resolve(username: String): String =
-    s"cn=$username,$searchBase"
-
+  override def resolve(username: String): String = s"cn=$username,$searchBase"
 }
