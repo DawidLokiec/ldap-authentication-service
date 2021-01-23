@@ -1,8 +1,8 @@
 enablePlugins(JavaAppPackaging, DockerPlugin)
 
 scalaVersion := "2.13.4"
-val akkaVersion = "2.6.10"
-val akkaHttpVersion = "10.2.2"
+val akkaVersion = "2.6.11"
+val akkaHttpVersion = "10.2.3"
 val akkaHttpCorsVersion = "1.1.1"
 val slf4jVersion = "1.7.30"
 
