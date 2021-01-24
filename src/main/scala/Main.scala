@@ -29,16 +29,23 @@ object Main {
     implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, Constants.ActorSystemName)
     implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
 
+    println("Start reading environment variables ...")
+    val ldapServerUrl = sys.env(Constants.EnvVarNameLdapServerUrl)
+    println("Read LDAP server's URL = " + ldapServerUrl)
+    val ldapSearchBase = sys.env(Constants.EnvVarNameLdapSearchBase)
+    println("Read LDAP search base = " + ldapSearchBase)
+
     val service: LdapAuthenticationService = new LdapAuthenticationServiceImpl(
-      sys.env(Constants.EnvVarNameLdapServerUrl),
-      new DistinguishedNameResolverImpl(sys.env(Constants.EnvVarNameLdapSearchBase))
+      ldapServerUrl,
+      new DistinguishedNameResolverImpl(ldapSearchBase)
     )
 
     val httpsConnectionContext = HttpsConnectionContextFactory(
       keyStoreFilename = sys.env(Constants.EnvVarNameKeystoreFullName),
       keyStorePassword = sys.env(Constants.EnvVarNameKeystorePassword)
     )
-
+    println("End reading environment variables")
+    println("Booting HTTPS server ...")
     val httpsServer = new Server(httpsContext = httpsConnectionContext)
     val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandlerImpl(service))
     val serverEndpoint = s"https://${httpsServer.host}:${httpsServer.port}/"
