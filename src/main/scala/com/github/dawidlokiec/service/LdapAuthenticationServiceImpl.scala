@@ -3,16 +3,17 @@ package com.github.dawidlokiec.service
 /** This class provides functionalities to perform an authentication against a LDAP directory.
  *
  * @param ldapServerUrl             the URL of the LDAP server.
- * @param distinguishedNameResolver the DN resolver.
+ * @param distinguishedNameResolver the distinguished name resolver.
  */
-class LdapAuthenticationServiceImpl(private val ldapServerUrl: String,
-                                    private val distinguishedNameResolver: DistinguishedNameResolver
+class LdapAuthenticationServiceImpl(
+                                     private val ldapServerUrl: String,
+                                     private val distinguishedNameResolver: DistinguishedNameResolver
                                    ) extends LdapAuthenticationService {
 
   import java.util.Properties
   import javax.naming.{AuthenticationException, Context}
 
-  /** The the environment for the LDAP connection. */
+  /** The environment for the LDAP connection. */
   private val ldapEnvironmentProperties = new Properties()
   ldapEnvironmentProperties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory")
   ldapEnvironmentProperties.put(Context.PROVIDER_URL, ldapServerUrl)
@@ -23,11 +24,10 @@ class LdapAuthenticationServiceImpl(private val ldapServerUrl: String,
    *
    * @param username the username.
    * @param password the user's plain password.
-   * @return true if the user was successfully authenticated, otherwise false. Returns always false, if the password is
-   *         blank.
+   * @return true if the user was successfully authenticated. Returns always false, if the password is blank.
    */
   override def authenticate(username: String, password: String): Boolean = {
-    if (null == password || password.isEmpty) {
+    if (null == password || password.isEmpty || password.isBlank) {
       false
     } else {
       ldapEnvironmentProperties.put(Context.SECURITY_PRINCIPAL, distinguishedNameResolver.resolve(username))
@@ -38,7 +38,8 @@ class LdapAuthenticationServiceImpl(private val ldapServerUrl: String,
         connectionWithLdapServer.close()
         true
       } catch {
-        case _: AuthenticationException => false
+        case e: AuthenticationException => false
+        // No default case, let it crash
       }
     }
   }

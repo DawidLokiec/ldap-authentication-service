@@ -8,6 +8,8 @@ object Constants {
   // LDAP related environment variables
   /** The name of the environment variable for the LDAP server's URL: LDAP_SERVER_URL. */
   val EnvVarNameLdapServerUrl = "LDAP_SERVER_URL"
+  /** The name of the environment variable for the LDAP attribute that contains the username: LDAP_USERNAME_ATTRIBUTE. */
+  val EnvVarNameLdapUsernameAttribute = "LDAP_USERNAME_ATTRIBUTE"
   /** The name of the environment variable for the search base: LDAP_SEARCH_BASE. */
   val EnvVarNameLdapSearchBase = "LDAP_SEARCH_BASE"
 
