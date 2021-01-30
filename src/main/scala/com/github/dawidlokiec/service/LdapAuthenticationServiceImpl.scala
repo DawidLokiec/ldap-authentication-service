@@ -1,6 +1,7 @@
 package com.github.dawidlokiec.service
 
-/** This class provides functionalities to perform an authentication against a LDAP directory.
+/**
+ * This class provides functionalities to perform an LDAP authentication.
  *
  * @param ldapServerUrl             the URL of the LDAP server.
  * @param distinguishedNameResolver the distinguished name resolver.
