@@ -16,14 +16,16 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
   import akka.http.scaladsl.server.Route
   import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
 
+  private final case class Credentials(username: String, password: String)
+
   /**
    * Returns an instance of Route representing the following route:
-   * GET /?username=<username>&password=<password>
+   * POST /
    *
    * @return an instance of Route representing GET /?username=<username>&password=<password>.
    */
   override def getRoute: Route = cors() {
-    import akka.http.scaladsl.server.Directives.{complete, get, parameters}
+    import akka.http.scaladsl.server.Directives._
     get {
       parameters("username", "password") { (username, password) =>
         import akka.http.scaladsl.model.StatusCodes
@@ -34,6 +36,19 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
             StatusCodes.Unauthorized
         )
       }
+    } ~ post {
+        import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
+        import io.circe.generic.auto._
+        entity(as[Credentials]) { credentials =>
+          import akka.http.scaladsl.model.StatusCodes
+          complete(
+            if (ldapAuthenticationService.authenticate(credentials.username, credentials.password))
+              StatusCodes.OK
+            else
+              StatusCodes.Unauthorized
+          )
+        }
     }
   }
 }
+
