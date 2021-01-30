@@ -1,9 +1,10 @@
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import com.github.dawidlokiec.config.Constants
+import com.github.dawidlokiec.handler.AuthenticationRequestHandler
 import com.github.dawidlokiec.helper.HttpsConnectionContextFactory
 import com.github.dawidlokiec.server.Server
-import com.github.dawidlokiec.service.{AuthenticationRequestHandlerImpl, DistinguishedNameResolverImpl, LdapAuthenticationService, LdapAuthenticationServiceImpl}
+import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationService, LdapAuthenticationServiceImpl}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -56,13 +57,13 @@ object Main {
     Logger.info("Finished reading environment variables")
     Logger.info("Booting HTTPS server ...")
     val httpsServer = new Server(httpsContext = httpsConnectionContext)
-    val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandlerImpl(service))
+    val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandler(service))
     val serverEndpoint = s"https://${httpsServer.host}:${httpsServer.port}/"
 
     import scala.util.{Failure, Success}
     bindingFuture.onComplete {
       case Success(_) =>
-        Logger.info(s"Server online at $serverEndpoint")
+        Logger.info(s"Service online at $serverEndpoint")
       case Failure(e) =>
         Logger.error(s"Failed to bind server at $serverEndpoint: {}", e.getMessage, e)
         actorSystem.terminate()

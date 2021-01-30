@@ -10,7 +10,7 @@ trait LdapAuthenticationService {
    *
    * @param username the username.
    * @param password the user's password.
-   * @return true if the user was successfully authenticated, otherwise false.
+   * @return true if the user was successfully authenticated.
    */
   def authenticate(username: String, password: String): Boolean
 

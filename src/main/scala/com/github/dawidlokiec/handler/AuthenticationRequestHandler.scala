@@ -1,6 +1,7 @@
-package com.github.dawidlokiec.service
+package com.github.dawidlokiec.handler
 
 import com.github.dawidlokiec.server.dip.RequestHandler
+import com.github.dawidlokiec.service.LdapAuthenticationService
 
 /**
  * This class is responsible for handling incoming authentication requests.
@@ -9,12 +10,11 @@ import com.github.dawidlokiec.server.dip.RequestHandler
  *
  * @param ldapAuthenticationService the authentication service to perform authentication.
  */
-class AuthenticationRequestHandlerImpl(private val ldapAuthenticationService: LdapAuthenticationService) extends
+class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAuthenticationService) extends
   RequestHandler {
 
-  import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
-  import akka.http.scaladsl.server.Directives.{complete, get, parameters}
   import akka.http.scaladsl.server.Route
+  import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
 
   /**
    * Returns an instance of Route representing the following route:
@@ -23,6 +23,7 @@ class AuthenticationRequestHandlerImpl(private val ldapAuthenticationService: Ld
    * @return an instance of Route representing GET /?username=<username>&password=<password>.
    */
   override def getRoute: Route = cors() {
+    import akka.http.scaladsl.server.Directives.{complete, get, parameters}
     get {
       parameters("username", "password") { (username, password) =>
         import akka.http.scaladsl.model.StatusCodes

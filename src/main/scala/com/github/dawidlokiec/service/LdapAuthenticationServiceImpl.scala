@@ -24,7 +24,7 @@ class LdapAuthenticationServiceImpl(
    * Authenticates an user.
    *
    * @param username the username.
-   * @param password the user's plain password.
+   * @param password the user's password.
    * @return true if the user was successfully authenticated. Returns always false, if the password is blank.
    */
   override def authenticate(username: String, password: String): Boolean = {

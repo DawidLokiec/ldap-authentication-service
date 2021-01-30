@@ -1,12 +1,13 @@
-package com.github.dawidlokiec.service
+package com.github.dawidlokiec.handler
 
 import akka.http.scaladsl.model.StatusCodes
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.github.dawidlokiec.server.dip.RequestHandler
+import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
-class AuthenticationRequestHandlerImplSpec extends AnyFlatSpec with Matchers with ScalatestRouteTest {
+class AuthenticationRequestHandlerSpec extends AnyFlatSpec with Matchers with ScalatestRouteTest {
 
   // the integration tests uses a public reachable LDAP test server
   // https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
@@ -24,7 +25,7 @@ class AuthenticationRequestHandlerImplSpec extends AnyFlatSpec with Matchers wit
     new DistinguishedNameResolverImpl(usernameAttribute, searchBase)
   )
 
-  private val handler: RequestHandler = new AuthenticationRequestHandlerImpl(ldapAuthenticationService)
+  private val handler: RequestHandler = new AuthenticationRequestHandler(ldapAuthenticationService)
 
   "GET /?username=<username>&password=<password>" should "return 200 (OK) for valid credentials" in {
     // Stimulation
