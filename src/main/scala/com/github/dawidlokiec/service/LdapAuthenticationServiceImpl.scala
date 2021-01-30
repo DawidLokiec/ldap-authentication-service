@@ -18,7 +18,7 @@ class LdapAuthenticationServiceImpl(
   private val ldapEnvironmentProperties = new Properties()
   ldapEnvironmentProperties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory")
   ldapEnvironmentProperties.put(Context.PROVIDER_URL, ldapServerUrl)
-  ldapEnvironmentProperties.put(Context.SECURITY_AUTHENTICATION, "simple") // TODO increase security
+  ldapEnvironmentProperties.put(Context.SECURITY_AUTHENTICATION, "simple")
 
   /**
    * Authenticates an user.
