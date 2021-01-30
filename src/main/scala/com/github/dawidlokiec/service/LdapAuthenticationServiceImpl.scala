@@ -39,7 +39,7 @@ class LdapAuthenticationServiceImpl(
         connectionWithLdapServer.close()
         true
       } catch {
-        case e: AuthenticationException => false
+        case _: AuthenticationException => false
         // No default case, let it crash
       }
     }

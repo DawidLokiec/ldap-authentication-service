@@ -1,6 +1,6 @@
 package com.github.dawidlokiec.handler
 
-import akka.http.scaladsl.model.StatusCodes
+import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.github.dawidlokiec.server.dip.RequestHandler
 import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
@@ -9,7 +9,7 @@ import org.scalatest.matchers.should.Matchers
 
 class AuthenticationRequestHandlerSpec extends AnyFlatSpec with Matchers with ScalatestRouteTest {
 
-  // the integration tests uses a public reachable LDAP test server
+  // the integration tests uses a public reachable LDAP requestBody server
   // https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
   // Server: ldap.forumsys.com
   // Port: 389
@@ -27,63 +27,58 @@ class AuthenticationRequestHandlerSpec extends AnyFlatSpec with Matchers with Sc
 
   private val handler: RequestHandler = new AuthenticationRequestHandler(ldapAuthenticationService)
 
-  "GET /?username=<username>&password=<password>" should "return 200 (OK) for valid credentials" in {
+  it should "return 200 (OK) for valid credentials" in {
     // Stimulation
-    Get(s"/?username=$username&password=$password") ~> handler.getRoute ~> check {
+    Post("/").withEntity(ContentTypes.`application/json`, toJson(username, password)) ~> handler.getRoute ~> check {
       // Test
       status shouldEqual StatusCodes.OK
     }
   }
 
-  "GET /?username=<username>&password=<password>" should "return 401 (Unauthorized ) for invalid credentials" in {
-    // Preperations
+  it should "return 401 (Unauthorized) for invalid credentials" in {
     val invalidUsername = appendCurrentSystemTime(username)
     val invalidPassword = appendCurrentSystemTime(password)
 
     // Precondition
-    Get(s"/?username=$username&password=$password") ~> handler.getRoute ~> check {
+    Post("/").withEntity(ContentTypes.`application/json`, toJson(username, password)) ~> handler.getRoute ~> check {
       status shouldEqual StatusCodes.OK
     }
 
     // Stimulation 1
-    Get(s"/?username=$invalidUsername&password=$password") ~> handler.getRoute ~> check {
+    Post("/").withEntity(ContentTypes.`application/json`, toJson(invalidUsername, password)) ~> handler.getRoute ~> check {
       // Test 1
       status shouldEqual StatusCodes.Unauthorized
     }
 
     // Stimulation 2
-    Get(s"/?username=$username&password=$invalidPassword") ~> handler.getRoute ~> check {
+    Post("/").withEntity(ContentTypes.`application/json`, toJson(username, invalidPassword)) ~> handler.getRoute ~> check {
       // Test 2
       status shouldEqual StatusCodes.Unauthorized
     }
 
     // Stimulation 3
-    Get(s"/?username=$invalidUsername&password=$invalidPassword") ~> handler.getRoute ~> check {
+    Post("/").withEntity(ContentTypes.`application/json`, toJson(invalidUsername, invalidPassword)) ~> handler.getRoute ~> check {
       // Test 3
       status shouldEqual StatusCodes.Unauthorized
     }
   }
 
-  "an empty password" should "return status code unauthorized" in {
-    // Stimulation 1
-    val emptyString = ""
-    Get(s"/?username=$username&password=$emptyString") ~> handler.getRoute ~> check {
-      // Test 1
-      status shouldEqual StatusCodes.Unauthorized
-    }
-
-    // Stimulation 2
-    Get(s"/?username=$username&password=") ~> handler.getRoute ~> check {
-      // Test 2
-      status shouldEqual StatusCodes.Unauthorized
-    }
-
-    // Stimulation 3
-    Get(s"/?username=$username&password") ~> handler.getRoute ~> check {
-      // Test 3
-      status shouldEqual StatusCodes.Unauthorized
-    }
+  it should "return 401 (Unauthorized) for missing password" in {
+    Seq("", "    ").foreach(x => {
+      Post("/").withEntity(ContentTypes.`application/json`, toJson(username, x)) ~> handler.getRoute ~> check {
+        status shouldEqual StatusCodes.Unauthorized
+      }
+    })
   }
 
   private def appendCurrentSystemTime(string: String): String = string + System.currentTimeMillis()
+
+  private def toJson(username: String, password: String): String = {
+    s"""
+       |{
+       |  "username": "$username",
+       |  "password": "$password"
+       |}
+    """.stripMargin
+  }
 }
