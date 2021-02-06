@@ -7,6 +7,7 @@ import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthen
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 
+//noinspection SpellCheckingInspection
 class AuthenticationRequestHandlerSpec extends AnyFlatSpec with Matchers with ScalatestRouteTest {
 
   // the integration tests uses a public reachable LDAP requestBody server

@@ -35,17 +35,16 @@ object Main {
    * @param args command line arguments are ignored. Instead the above mentioned environment variables need to be set.
    */
   def main(args: Array[String]): Unit = {
-    implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, Constants.ActorSystemName)
-    implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
-
     Logger.info("Start reading environment variables ...")
     val ldapServerUrl = sys.env(Constants.EnvVarNameLdapServerUrl)
-    Logger.info("Read LDAP server's URL = " + ldapServerUrl)
+    Logger.info("Read LDAP server's URL = {}", ldapServerUrl)
     val ldapUsernameAttribute = sys.env(Constants.EnvVarNameLdapUsernameAttribute)
-    Logger.info("Read LDAP username attribute = " + ldapUsernameAttribute)
+    Logger.info("Read LDAP username attribute = {}", ldapUsernameAttribute)
     val ldapSearchBase = sys.env(Constants.EnvVarNameLdapSearchBase)
-    Logger.info("Read LDAP search base = " + ldapSearchBase)
+    Logger.info("Read LDAP search base = {}", ldapSearchBase)
 
+    implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, Constants.ActorSystemName)
+    implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
     val service: LdapAuthenticationService = new LdapAuthenticationServiceImpl(
       ldapServerUrl,
       new DistinguishedNameResolverImpl(ldapUsernameAttribute, ldapSearchBase)
@@ -55,7 +54,7 @@ object Main {
       keyStoreFilename = sys.env(Constants.EnvVarNameKeystoreFullName),
       keyStorePassword = sys.env(Constants.EnvVarNameKeystorePassword)
     )
-    Logger.info("Finished reading environment variables")
+    Logger.info("Finished successfully reading environment variables")
     Logger.info("Booting HTTPS server ...")
     val httpsServer = new Server(httpsContext = httpsConnectionContext)
     val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandler(service))
