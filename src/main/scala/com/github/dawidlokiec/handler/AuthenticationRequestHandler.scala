@@ -1,7 +1,7 @@
 package com.github.dawidlokiec.handler
 
+import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
 import com.github.dawidlokiec.server.dip.RequestHandler
-import com.github.dawidlokiec.service.LdapAuthenticationService
 
 /**
  * This class is responsible for handling incoming authentication requests.

@@ -1,5 +1,7 @@
 package com.github.dawidlokiec.service
 
+import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
+
 /**
  * This class provides functionalities to perform an LDAP authentication.
  *
@@ -40,7 +42,6 @@ class LdapAuthenticationServiceImpl(
         true
       } catch {
         case _: AuthenticationException => false
-        // No default case, let it crash
       }
     }
   }

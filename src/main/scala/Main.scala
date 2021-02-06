@@ -2,9 +2,10 @@ import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import com.github.dawidlokiec.config.Constants
 import com.github.dawidlokiec.handler.AuthenticationRequestHandler
+import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
 import com.github.dawidlokiec.helper.HttpsConnectionContextFactory
 import com.github.dawidlokiec.server.Server
-import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationService, LdapAuthenticationServiceImpl}
+import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.{Await, ExecutionContextExecutor}

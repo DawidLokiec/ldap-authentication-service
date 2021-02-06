@@ -1,7 +1,7 @@
-package com.github.dawidlokiec.service
+package com.github.dawidlokiec.handler.dip
 
 /**
- * This trait defines the functionalities of a LDAP authentication service.
+ * Defines the functionalities of a LDAP authentication service.
  */
 trait LdapAuthenticationService {
 

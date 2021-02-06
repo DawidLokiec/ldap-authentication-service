@@ -1,7 +1,7 @@
 package com.github.dawidlokiec.service
 
 /**
- * This trait defines a method to resolve the distinguished name (DN) of an user from its username.
+ * Defines a method to resolve the distinguished name (DN) of an user from its username.
  * Example: Supposed the username is alice, then the method should return the following example distinguished name:
  * uid=alice,ou=people,dc=wonderland,dc=in.
  */
