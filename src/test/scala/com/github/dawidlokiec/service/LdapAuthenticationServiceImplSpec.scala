@@ -5,7 +5,9 @@ import org.scalatest.flatspec.AsyncFlatSpec
 //noinspection SpellCheckingInspection
 class LdapAuthenticationServiceImplSpec extends AsyncFlatSpec {
 
+  import com.github.dawidlokiec.domain.Credentials
   import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
+
 
   implicit val globalExecutionContext: ExecutionContextExecutor = ExecutionContext.global
   // the integration tests uses a public reachable LDAP test server
@@ -25,14 +27,14 @@ class LdapAuthenticationServiceImplSpec extends AsyncFlatSpec {
   )
 
   it should "return false for a missing password" in {
-    ldapAuthenticationService.authenticate(username, "").map(result => assert(!result))
-    ldapAuthenticationService.authenticate(username, " ").map(result => assert(!result))
-    ldapAuthenticationService.authenticate(username, "  ").map(result => assert(!result))
-    ldapAuthenticationService.authenticate(username, null).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(username, "")).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(username, " ")).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(username, "  ")).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(username, null)).map(result => assert(!result))
   }
 
   it should "return true for valid credentials" in {
-    ldapAuthenticationService.authenticate(username, password).map(result => assert(result))
+    ldapAuthenticationService.authenticate(Credentials(username, password)).map(result => assert(result))
   }
 
   it should "return false for invalid credentials" in {
@@ -41,11 +43,11 @@ class LdapAuthenticationServiceImplSpec extends AsyncFlatSpec {
     val invalidPassword = appendCurrentSystemTime(password)
 
     // Test 1: valid invalid username & valid password
-    ldapAuthenticationService.authenticate(invalidUsername, password).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(invalidUsername, password)).map(result => assert(!result))
     // Test 2: valid username & invalid password
-    ldapAuthenticationService.authenticate(username, invalidPassword).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(username, invalidPassword)).map(result => assert(!result))
     // Test 3: invalid username & password
-    ldapAuthenticationService.authenticate(invalidUsername, invalidPassword).map(result => assert(!result))
+    ldapAuthenticationService.authenticate(Credentials(invalidUsername, invalidPassword)).map(result => assert(!result))
   }
 
   private def appendCurrentSystemTime(string: String): String = string + System.currentTimeMillis()

@@ -1,5 +1,6 @@
 package com.github.dawidlokiec.service
 
+import com.github.dawidlokiec.domain.Credentials
 import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
@@ -26,19 +27,20 @@ class LdapAuthenticationServiceImpl(
   ldapEnvironmentProperties.put(Context.PROVIDER_URL, ldapServerUrl)
   ldapEnvironmentProperties.put(Context.SECURITY_AUTHENTICATION, "simple")
 
+
   /**
-   * Authenticates an user.
+   * Authenticates asynchronously an user.
    *
-   * @param username the username.
-   * @param password the user's password.
+   * @param credentials the credentials to check against an LDAP user.
    * @return true if the user was successfully authenticated. Returns always false, if the password is blank.
    */
-  override def authenticate(username: String, password: String): Future[Boolean] = {
+  override def authenticate(credentials: Credentials): Future[Boolean] = {
+    val password = credentials.password
     if (null == password || password.isEmpty || password.isBlank) {
       Future.successful(false)
     } else {
       Future {
-        ldapEnvironmentProperties.put(Context.SECURITY_PRINCIPAL, distinguishedNameResolver.resolve(username))
+        ldapEnvironmentProperties.put(Context.SECURITY_PRINCIPAL, distinguishedNameResolver.resolve(credentials.username))
         ldapEnvironmentProperties.put(Context.SECURITY_CREDENTIALS, password)
         try {
           import javax.naming.directory.InitialDirContext

@@ -3,11 +3,10 @@ package com.github.dawidlokiec.handler
 import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
 import com.github.dawidlokiec.server.dip.RequestHandler
 
-
 /**
  * This class is responsible for handling incoming authentication requests.
- * It handles only HTTP requests of the form: GET /?username=<username>&password=<password>.
- * The passed URL parameters (username and password combination) are the credentials to check.
+ * It handles only HTTP requests of the form: POST / {"username": "", "password": ""}.
+ * The passed username and password in the request body are the credentials to check.
  *
  * @param ldapAuthenticationService the authentication service to perform authentication.
  */
@@ -37,7 +36,7 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
       entity(as[Credentials]) { credentials =>
         import scala.util.{Failure, Success}
         import akka.http.scaladsl.model.StatusCodes
-        onComplete(ldapAuthenticationService.authenticate(credentials.username, credentials.password)) {
+        onComplete(ldapAuthenticationService.authenticate(credentials)) {
           case Success(true) => complete(StatusCodes.OK)
           case Success(false) => complete(StatusCodes.Unauthorized)
           case Failure(error) =>
