@@ -23,9 +23,6 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
    */
   private val logger: Logger = LoggerFactory.getLogger(getClass)
 
-
-  private final case class Credentials(username: String, password: String)
-
   /**
    * Returns an instance of Route representing the following route: POST / {"username": "", "password": ""}.
    *
@@ -36,6 +33,7 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
     post {
       import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
       import io.circe.generic.auto._
+      import com.github.dawidlokiec.domain.Credentials
       entity(as[Credentials]) { credentials =>
         import scala.util.{Failure, Success}
         import akka.http.scaladsl.model.StatusCodes
