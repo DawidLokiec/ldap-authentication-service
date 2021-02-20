@@ -125,4 +125,3 @@ ldap-authentication-service> sbt test
 ```
 ## Links
 - [Ready to run docker container](https://hub.docker.com/repository/docker/dawidlokiec/ldap-authentication-service)
-- [Me at LinkedIn](https://www.linkedin.com/in/dawid-l-8115141a2)
