@@ -1,7 +1,7 @@
 package de.htw_berlin.f4.handler
 
-import com.github.dawidlokiec.server.dip.RequestHandler
 import de.htw_berlin.f4.handler.dip.LdapAuthenticationService
+import de.htw_berlin.f4.server.dip.RequestHandler
 
 /**
  * This class is responsible for handling incoming authentication requests.

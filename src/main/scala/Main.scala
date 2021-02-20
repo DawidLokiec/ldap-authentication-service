@@ -1,10 +1,11 @@
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import com.github.dawidlokiec.helper.HttpsConnectionContextFactory
-import com.github.dawidlokiec.server.Server
+import akka.http.scaladsl.HttpsConnectionContext
 import de.htw_berlin.f4.config.Constants
 import de.htw_berlin.f4.handler.AuthenticationRequestHandler
 import de.htw_berlin.f4.handler.dip.LdapAuthenticationService
+import de.htw_berlin.f4.helper.HttpsConnectionContextFactory
+import de.htw_berlin.f4.server.Server
 import de.htw_berlin.f4.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
 import org.slf4j.{Logger, LoggerFactory}
 
@@ -42,7 +43,7 @@ object Main {
     Logger.info("Read LDAP username attribute = {}", ldapUsernameAttribute)
     val ldapSearchBase = sys.env(Constants.LDAP_SEARCH_BASE)
     Logger.info("Read LDAP search base = {}", ldapSearchBase)
-    val httpsConnectionContext = HttpsConnectionContextFactory(
+    implicit val httpsConnectionContext: HttpsConnectionContext = HttpsConnectionContextFactory(
       keyStoreFilename = sys.env(Constants.KEYSTORE_FULL_NAME),
       keyStorePassword = sys.env(Constants.KEYSTORE_PASSWORD)
     )
@@ -58,7 +59,7 @@ object Main {
     Logger.info("Finished successfully constructing dependencies")
 
     Logger.info("Booting HTTPS server...")
-    val httpsServer = new Server(httpsContext = httpsConnectionContext)
+    val httpsServer = new Server(enableCors = true)
     val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandler(service))
     val serverEndpoint = s"https://${httpsServer.host}:${httpsServer.port}/"
 

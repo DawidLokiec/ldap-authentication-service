@@ -3,7 +3,6 @@ enablePlugins(JavaAppPackaging, DockerPlugin)
 scalaVersion := "2.13.4"
 val akkaVersion = "2.6.11"
 val akkaHttpVersion = "10.2.3"
-val akkaHttpCorsVersion = "1.1.1"
 val akkaHTTPCirceVersion = "1.35.3"
 val circeVersion = "0.13.0"
 val slf4jVersion = "1.7.30"
@@ -13,7 +12,6 @@ libraryDependencies ++= Seq(
   "com.typesafe.akka" %% "akka-stream" % akkaVersion,
   "com.typesafe.akka" %% "akka-actor-typed" % akkaVersion,
   "com.typesafe.akka" %% "akka-http" % akkaHttpVersion,
-  "ch.megard" %% "akka-http-cors" % akkaHttpCorsVersion,
   "org.slf4j" % "slf4j-simple" % slf4jVersion,
 
   "io.circe" %% "circe-core" % circeVersion,
