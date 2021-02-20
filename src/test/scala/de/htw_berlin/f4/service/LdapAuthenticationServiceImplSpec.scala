@@ -1,11 +1,12 @@
-package com.github.dawidlokiec.service
+package de.htw_berlin.f4.service
 
 import org.scalatest.flatspec.AsyncFlatSpec
 
 //noinspection SpellCheckingInspection
 class LdapAuthenticationServiceImplSpec extends AsyncFlatSpec {
 
-  import com.github.dawidlokiec.domain.Credentials
+  import de.htw_berlin.f4.domain.Credentials
+
   import scala.concurrent.{ExecutionContext, ExecutionContextExecutor}
 
 

@@ -1,11 +1,11 @@
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
-import com.github.dawidlokiec.config.Constants
-import com.github.dawidlokiec.handler.AuthenticationRequestHandler
-import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
 import com.github.dawidlokiec.helper.HttpsConnectionContextFactory
 import com.github.dawidlokiec.server.Server
-import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
+import de.htw_berlin.f4.config.Constants
+import de.htw_berlin.f4.handler.AuthenticationRequestHandler
+import de.htw_berlin.f4.handler.dip.LdapAuthenticationService
+import de.htw_berlin.f4.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
 import org.slf4j.{Logger, LoggerFactory}
 
 import scala.concurrent.{Await, ExecutionContextExecutor}
@@ -36,26 +36,28 @@ object Main {
    */
   def main(args: Array[String]): Unit = {
     Logger.info("Start reading environment variables ...")
-    val ldapServerUrl = sys.env(Constants.EnvVarNameLdapServerUrl)
+    val ldapServerUrl = sys.env(Constants.LDAP_SERVER_URL)
     Logger.info("Read LDAP server's URL = {}", ldapServerUrl)
-    val ldapUsernameAttribute = sys.env(Constants.EnvVarNameLdapUsernameAttribute)
+    val ldapUsernameAttribute = sys.env(Constants.LDAP_USERNAME_ATTRIBUTE)
     Logger.info("Read LDAP username attribute = {}", ldapUsernameAttribute)
-    val ldapSearchBase = sys.env(Constants.EnvVarNameLdapSearchBase)
+    val ldapSearchBase = sys.env(Constants.LDAP_SEARCH_BASE)
     Logger.info("Read LDAP search base = {}", ldapSearchBase)
+    val httpsConnectionContext = HttpsConnectionContextFactory(
+      keyStoreFilename = sys.env(Constants.KEYSTORE_FULL_NAME),
+      keyStorePassword = sys.env(Constants.KEYSTORE_PASSWORD)
+    )
+    Logger.info("Finished successfully reading environment variables")
 
+    Logger.info("Start constructing dependencies...")
     implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, Constants.ActorSystemName)
     implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
     val service: LdapAuthenticationService = new LdapAuthenticationServiceImpl(
       ldapServerUrl,
       new DistinguishedNameResolverImpl(ldapUsernameAttribute, ldapSearchBase)
     )
+    Logger.info("Finished successfully constructing dependencies")
 
-    val httpsConnectionContext = HttpsConnectionContextFactory(
-      keyStoreFilename = sys.env(Constants.EnvVarNameKeystoreFullName),
-      keyStorePassword = sys.env(Constants.EnvVarNameKeystorePassword)
-    )
-    Logger.info("Finished successfully reading environment variables")
-    Logger.info("Booting HTTPS server ...")
+    Logger.info("Booting HTTPS server...")
     val httpsServer = new Server(httpsContext = httpsConnectionContext)
     val bindingFuture = httpsServer.bindAndHandleWith(new AuthenticationRequestHandler(service))
     val serverEndpoint = s"https://${httpsServer.host}:${httpsServer.port}/"

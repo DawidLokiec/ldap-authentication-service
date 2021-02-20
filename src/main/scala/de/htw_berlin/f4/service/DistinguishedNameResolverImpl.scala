@@ -1,4 +1,4 @@
-package com.github.dawidlokiec.service
+package de.htw_berlin.f4.service
 
 /**
  * This class implements a method to resolve the distinguished name (DN) of an user from its username.

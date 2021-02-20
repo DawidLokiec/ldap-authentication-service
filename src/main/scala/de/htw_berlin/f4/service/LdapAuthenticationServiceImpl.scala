@@ -1,7 +1,7 @@
-package com.github.dawidlokiec.service
+package de.htw_berlin.f4.service
 
-import com.github.dawidlokiec.domain.Credentials
-import com.github.dawidlokiec.handler.dip.LdapAuthenticationService
+import de.htw_berlin.f4.domain.Credentials
+import de.htw_berlin.f4.handler.dip.LdapAuthenticationService
 
 import scala.concurrent.{ExecutionContextExecutor, Future}
 
@@ -21,22 +21,23 @@ class LdapAuthenticationServiceImpl(
   import java.util.Properties
   import javax.naming.{AuthenticationException, Context}
 
-  /** The environment for the LDAP connection. */
+  /**
+   * The environment for the LDAP connection.
+   */
   private val ldapEnvironmentProperties = new Properties()
   ldapEnvironmentProperties.put(Context.INITIAL_CONTEXT_FACTORY, "com.sun.jndi.ldap.LdapCtxFactory")
   ldapEnvironmentProperties.put(Context.PROVIDER_URL, ldapServerUrl)
   ldapEnvironmentProperties.put(Context.SECURITY_AUTHENTICATION, "simple")
 
-
   /**
    * Authenticates asynchronously an user.
    *
-   * @param credentials the credentials to check against an LDAP user.
+   * @param credentials the credentials to check against an LDAP server.
    * @return true if the user was successfully authenticated. Returns always false, if the password is blank.
    */
   override def authenticate(credentials: Credentials): Future[Boolean] = {
     val password = credentials.password
-    if (null == password || password.isEmpty || password.isBlank) {
+    if (null == password || password.isBlank) {
       Future.successful(false)
     } else {
       Future {

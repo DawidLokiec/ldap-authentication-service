@@ -1,7 +1,7 @@
-package com.github.dawidlokiec.domain
+package de.htw_berlin.f4.domain
 
 /**
- * Represents a credentials.
+ * Represents credentials.
  *
  * @param username the username.
  * @param password the password.

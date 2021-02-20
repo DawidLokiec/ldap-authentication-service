@@ -1,9 +1,9 @@
-package com.github.dawidlokiec.handler
+package de.htw_berlin.f4.handler
 
 import akka.http.scaladsl.model.{ContentTypes, StatusCodes}
 import akka.http.scaladsl.testkit.ScalatestRouteTest
 import com.github.dawidlokiec.server.dip.RequestHandler
-import com.github.dawidlokiec.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
+import de.htw_berlin.f4.service.{DistinguishedNameResolverImpl, LdapAuthenticationServiceImpl}
 import org.scalatest.flatspec.AnyFlatSpec
 import org.scalatest.matchers.should.Matchers
 

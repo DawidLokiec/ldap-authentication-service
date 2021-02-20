@@ -1,4 +1,4 @@
-package com.github.dawidlokiec.service
+package de.htw_berlin.f4.service
 
 import org.scalatest.flatspec.AnyFlatSpec
 
