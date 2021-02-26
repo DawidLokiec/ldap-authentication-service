@@ -1,7 +1,6 @@
 import akka.actor.typed.ActorSystem
 import akka.actor.typed.scaladsl.Behaviors
 import akka.http.scaladsl.HttpsConnectionContext
-import de.htw_berlin.f4.config.Constants
 import de.htw_berlin.f4.handler.AuthenticationRequestHandler
 import de.htw_berlin.f4.handler.dip.LdapAuthenticationService
 import de.htw_berlin.f4.helper.HttpsConnectionContextFactory
@@ -37,20 +36,22 @@ object Main {
    */
   def main(args: Array[String]): Unit = {
     Logger.info("Start reading environment variables ...")
-    val ldapServerUrl = sys.env(Constants.LDAP_SERVER_URL)
+    val ldapServerUrl = sys.env("LDAP_SERVER_URL")
     Logger.info("Read LDAP server's URL = {}", ldapServerUrl)
-    val ldapUsernameAttribute = sys.env(Constants.LDAP_USERNAME_ATTRIBUTE)
+    val ldapUsernameAttribute = sys.env("LDAP_USERNAME_ATTRIBUTE")
     Logger.info("Read LDAP username attribute = {}", ldapUsernameAttribute)
-    val ldapSearchBase = sys.env(Constants.LDAP_SEARCH_BASE)
+    val ldapSearchBase = sys.env("LDAP_SEARCH_BASE")
     Logger.info("Read LDAP search base = {}", ldapSearchBase)
     implicit val httpsConnectionContext: HttpsConnectionContext = HttpsConnectionContextFactory(
-      keyStoreFilename = sys.env(Constants.KEYSTORE_FULL_NAME),
-      keyStorePassword = sys.env(Constants.KEYSTORE_PASSWORD)
+      keyStoreFilename = sys.env("KEYSTORE_FULL_NAME"),
+      keyStorePassword = sys.env("KEYSTORE_PASSWORD")
     )
     Logger.info("Finished successfully reading environment variables")
 
     Logger.info("Start constructing dependencies...")
-    implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(Behaviors.empty, Constants.ActorSystemName)
+    implicit val actorSystem: ActorSystem[Nothing] = ActorSystem(
+      Behaviors.empty, "ldap-authentication-service-actor-system"
+    )
     implicit val executionContext: ExecutionContextExecutor = actorSystem.executionContext
     val service: LdapAuthenticationService = new LdapAuthenticationServiceImpl(
       ldapServerUrl,
