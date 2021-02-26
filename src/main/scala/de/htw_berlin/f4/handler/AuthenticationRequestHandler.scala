@@ -14,7 +14,6 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
   RequestHandler {
 
   import akka.http.scaladsl.server.Route
-  import ch.megard.akka.http.cors.scaladsl.CorsDirectives.cors
   import org.slf4j.LoggerFactory
 
   /**
@@ -27,7 +26,7 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
    *
    * @return an instance of Route representing POST / {"username": "", "password": ""}.
    */
-  override def getRoute: Route = cors() {
+  override def getRoute: Route = {
     import akka.http.scaladsl.server.Directives.{as, complete, entity, onComplete, post}
     post {
       import de.heikoseeberger.akkahttpcirce.FailFastCirceSupport._
@@ -39,10 +38,9 @@ class AuthenticationRequestHandler(private val ldapAuthenticationService: LdapAu
         onComplete(ldapAuthenticationService.authenticate(credentials)) {
           case Success(true) => complete(StatusCodes.OK)
           case Success(false) => complete(StatusCodes.Unauthorized)
-          case Failure(error) => {
+          case Failure(error) =>
             Logger.error("Error during LDAP authentication {}", error.getMessage, error)
             complete(StatusCodes.InternalServerError, error.getMessage) // Let is crash
-          }
         }
       }
     }
