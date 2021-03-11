@@ -11,7 +11,7 @@ class LdapAuthenticationServiceImplSpec extends AsyncFlatSpec {
 
 
   implicit val globalExecutionContext: ExecutionContextExecutor = ExecutionContext.global
-  // the integration tests uses a public reachable LDAP test server
+  // the integration tests use a public reachable LDAP test server
   // https://www.forumsys.com/tutorials/integration-how-to/ldap/online-ldap-test-server/
   // Server: ldap.forumsys.com
   // Port: 389
