@@ -34,6 +34,9 @@ The API uses **JSON** as the format of the payload.
 - 401 (Unauthorized) if the authentication was unsuccessful (the passed credentials are invalid). **No** response body.
 - 500 (Internal Server Error) if an unexpected error occurred. In such case check the error message in the response body and also the error logged to the stderr. 
 
+**EXAMPLE**
+```curl -H "Content-Type: application/json" -d '{"username":"joh.doe", "password":"secret"}' https://example.com:8636/```
+
 ## Configuring
 
 The microservice is configured by the following environment variables:
@@ -50,19 +53,19 @@ This is a **sbt** based project.
 
 #### Compiling
 
-```scala
+```powershell
 sbt compile
 ```
 
 ### Running
 
-```scala
+```powershell
 sbt run
 ```
 
 #### Dockerizing 
 
-```scala
+```powershell
 sbt docker:publishLocal
 ```
 
