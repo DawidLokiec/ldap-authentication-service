@@ -36,7 +36,7 @@ The API uses **JSON** as the format of the payload.
 
 **EXAMPLE**
 ```bash
-curl -H "Content-Type: application/json" -d '{"username":"joh.doe", "password":"secret"}' https://example.com:8636/
+curl -H "Content-Type: application/json" -d '{"username":"john.doe", "password":"secret"}' https://example.com/
 ```
 
 ## Configuring
