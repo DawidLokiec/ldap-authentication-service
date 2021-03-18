@@ -1,6 +1,6 @@
 # LDAP Authentication Service
 ## Repository Description
-This repository contains an implementation of a microservice which exposes a **REST API for LDAP authentication**.
+This repository contains an implementation of a microservice which exposes a **REST API for LDAP user authentication**.
 
 ## API Description
 
